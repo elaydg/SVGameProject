@@ -7,10 +7,12 @@ public class PlayerController : MonoBehaviour
     public float movementSpeed = 5f;
     public float rotationSpeed = 1.0f;
     private Rigidbody rb; //RigitBody tanýmlamasý
+    private Animator animator; //animasyon deðeri tanýmlanýr, public olarak tanýmlasaydýk direkt içine sürükleyebilirdik
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>(); //rb var olan rigitbody'e baðlanýr.
+        animator = GetComponent<Animator>(); //animasyona ulaþmayý saðlar. animasyonun private tanýmlandýðý durumlarda yazýlýr.
     }
 
     private void Update()
@@ -20,9 +22,13 @@ public class PlayerController : MonoBehaviour
 
         var movementDirection = new Vector3(horizontal, 0, vartical); //(x,y,z) gideceðimiz yön belirlenir. y eksenini istemediðiimiz için z'de vartical.
 
+        animator.SetBool("isRunning", movementDirection != Vector3.zero); //movementDir. sýfýrdan farklýysa bool'a deðer aktaarýlýr
+        //animator.SetBool("isRunning", rb.velocity != Vector3.zero); bu þekilde de yazýlabilir, hýza göre kontrol eder.
+
         if (movementDirection == Vector3.zero) //karakterin 0,0 noktasýna dönmemesi için, olduðu gibi kalmasýný saðlar.
         {
             Debug.Log("input doesn't exist.");
+            rb.velocity = Vector3.zero; //input almýyorsa hýzý 0'a çekilir.
             return;
         }
 
