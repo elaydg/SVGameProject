@@ -17,7 +17,14 @@ public class TableController : MonoBehaviour
         if (player.CollectGold()) 
         {
             goldObject.SetActive(false);
+            Invoke(nameof(ReloadGold), Random.Range(5f,15f)); 
+            //Inkove fonksiyon ismini string olarak alýr ve belirlenen süre sonra çalýþtýrýr. isim kýsmýnda sorun çýkmamasý için nameof() fonk.
+            //kullanýlabilir. 5-15 arasý rastgele saniyelerde ReloadGold fonk çalýþtýrýr.
         }
+    }
+    private void ReloadGold() 
+    {
+        goldObject.SetActive(true); //altýn objesini açar
     }
 
 
